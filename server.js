@@ -5,7 +5,7 @@ const app = express();
 app.use(body_parser.urlencoded({extended: true}));
 app.use(cors({
 
-    origin: "/"
+    origin: "/",
 }))
 app.use(file_upload());
 
@@ -31,4 +31,10 @@ app.get("/",(req,res)=>{
 app.listen(process.env.PORT,()=>{
 
     console.log("The web server is up and running");
+    mongoose.connect(process.env.MONGO_DB_CONN_STR, {useNewUrlParser: true, useUnifiedTopology: true})
+    .then(()=>{
+
+        console.log("Connection to MongoDB Successful");
+    })
+    .catch(err=>console.log(`Error in connecting to DB: ${err}`));
 });
